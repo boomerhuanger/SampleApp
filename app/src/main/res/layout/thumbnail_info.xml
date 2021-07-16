@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/thumbnail_album_id"
+            android:text="Album ID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="30sp"
+            ></TextView>
+
+        <TextView
+            android:id="@+id/thumbnail_photo_id"
+            android:text="Photo ID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="30sp"
+            ></TextView>
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/thumbnail"
+            android:layout_gravity="center_horizontal"
+            ></ImageView>
+
+        <TextView
+            android:id="@+id/thumbnailText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="30sp"
+            ></TextView>
+
+    </LinearLayout>
+</ScrollView>
