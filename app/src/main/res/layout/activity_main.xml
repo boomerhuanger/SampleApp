@@ -11,7 +11,7 @@
         android:layout_marginRight="30dp"
         android:layout_marginTop="50dp"
         android:id="@+id/mainView"
-        tools:context=".Fragment.MainActivity">
+        tools:context=".fragment.MainActivity">
 
         <FrameLayout
             android:id="@+id/container"

@@ -1,4 +1,4 @@
-package com.example.helloworld
+package com.example.sampleapp.models
 
 class Album(
     var albumId: Int,

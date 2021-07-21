@@ -10,12 +10,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.R
+import com.example.sampleapp.models.Album
 import com.squareup.picasso.Picasso
-import org.w3c.dom.Text
-import java.util.*
 
-class AlbumAdapter(private val mContext: Context?, private val resource: Int, albums: List<Album?>) :
-    ArrayAdapter<Album?>(mContext!!, resource, albums) {
+class AlbumAdapter(private val mContext: Context?, private val resource: Int, albums: List<Album>?) :
+    ArrayAdapter<Album?>(mContext!!, resource, albums!!) {
     private var holder: AlbumViewHolder? = null
 
     //getting the view and attach it to the ListView

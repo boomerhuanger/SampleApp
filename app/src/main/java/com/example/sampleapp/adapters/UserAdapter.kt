@@ -8,11 +8,15 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.R
+import com.example.sampleapp.databinding.AlbumListBinding
+import com.example.sampleapp.databinding.UserListBinding
+import com.example.sampleapp.models.User
 
 class UserAdapter(private val mContext: Context?, var mResource: Int, users: List<User>?) : ArrayAdapter<User?>(
     mContext!!, mResource, users!!) {
     //getting the view and attach it to the ListView
     private var holder : UserViewHolder? = null;
+    private lateinit var binding: UserListBinding;
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var convertView = convertView
         val name = getItem(position)!!.name

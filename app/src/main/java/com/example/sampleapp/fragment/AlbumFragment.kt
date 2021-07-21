@@ -8,17 +8,22 @@ import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.example.sampleapp.*
+import com.example.sampleapp.databinding.AlbumListBinding
+import com.example.sampleapp.models.Album
+import com.example.sampleapp.network.UserService
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.sql.DriverManager
 import java.util.*
+import androidx.lifecycle.Observer
 
 /**
  * A simple [Fragment] subclass.
@@ -30,54 +35,76 @@ class AlbumFragment(albumId: Int) : Fragment() {
     private var view1: View? = null
     private val baseUrl = "https://jsonplaceholder.typicode.com/"
     private var fragment: Fragment? = null
-    private var albumAdapter : AlbumAdapter? = null
-    private var albumViewModel : AlbumViewModel? = null;
     private val thumbnailFragment : String = "Thumbnail Fragment"
+
+    private lateinit var albumViewModel: AlbumViewModel
+
+    //private var userViewModel : UserViewModel
+    private var albumAdapter: AlbumAdapter? = null;
+    private lateinit var binding: AlbumListBinding;
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
 
-        //ListView mListView = (ListView) findViewById(R.id.listView1);
-        if (albumViewModel == null) {
-            albumViewModel= ViewModelProvider(this).get(AlbumViewModel::class.java)
-        }
 
-        view1 = inflater.inflate(R.layout.album_list, container, false)
-        getPhotos()
+        albumViewModel = ViewModelProvider(this).get(AlbumViewModel::class.java)
+        albumViewModel.init()
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.album_list, container, false)
+        albumViewModel.getAlbumsLiveData().observe(viewLifecycleOwner, Observer { data ->
+            var albums = mutableListOf<Album>()
+            for (item in data) {
+                if (item.albumId == albumId) {
+                    albums.add(item)
+                }
+            }
+            albumAdapter = AlbumAdapter(context, R.layout.album_info, albums)
+            binding.albumList.adapter = albumAdapter
+            DriverManager.println("debug -- > ${data.toString()}")
+        })
+
+        Log.d("userAlbumAdapter", albumAdapter.toString())
+        val albumInfo = binding.albumList
+        albumInfo.adapter = albumAdapter
+
+
 
         //retro fit call should not be called on main thread
         //big system calls to a database etc. shoould be implemented with a viewModel
         //viewModel is like hiding the business logic
-        Log.d("Albums list", "The length of the list of Albums is" + albumViewModel?.albums?.size)
-        val albumView = view1!!.findViewById<ListView>(R.id.albumList)
-        if (albumView != null) {
+        //Log.d("Albums list", "The length of the list of Albums is" + albumViewModel?.albums?.size)
+        //val albumView = view1!!.findViewById<ListView>(R.id.albumList)
+        /*if (albumView != null) {
             var title = view1!!.findViewById<View>(R.id.album_id) as TextView
             title.setText("Album ID: " + albumId.toString())
-            albumView.onItemClickListener = OnItemClickListener { parent, view1, position, id ->
-                Log.d("Album fragment", "In album fragment")
-                    Log.i("Touch", "Touched the screen");
-                    Log.i("Position in list", Integer.toString(position));
-                    var fm = activity?.supportFragmentManager;
-                    fragment = fm!!.findFragmentByTag(thumbnailFragment);
-                    if (fragment == null) {
-                        val ft = fm?.beginTransaction();
-                        fragment = ThumbnailFragment(albumViewModel!!.albums[position]);
-                        ft.add(R.id.container, fragment as ThumbnailFragment, thumbnailFragment);
-                        ft.addToBackStack(thumbnailFragment)
-                        ft.commit();
-                        Log.i("Position is ", Integer.toString(position));
-                    }
-                Log.i("Touch", "Touched the screen");
-                Log.i("Position in list", Integer.toString(position));
-                Log.i("Album info", albumViewModel!!.albums[position].toString())
+
+        }*/
+
+        binding.title = "Album ID: $albumId"
+        albumInfo.onItemClickListener = OnItemClickListener { parent, view1, position, id ->
+            Log.d("Album fragment", "In album fragment")
+            Log.i("Touch", "Touched the screen");
+            Log.i("Position in list", Integer.toString(position));
+            var fm = activity?.supportFragmentManager;
+            fragment = fm!!.findFragmentByTag(thumbnailFragment);
+            if (fragment == null) {
+                val ft = fm?.beginTransaction();
+                fragment = ThumbnailFragment(albumViewModel.getAlbumsLiveData().value?.get(position));
+                ft.add(R.id.container, fragment as ThumbnailFragment, thumbnailFragment);
+                ft.addToBackStack(thumbnailFragment)
+                ft.commit();
+                Log.i("Position is ", Integer.toString(position));
             }
+            Log.i("Touch", "Touched the screen");
+            Log.i("Position in list", Integer.toString(position));
+            //Log.i("Album info", albumViewModel!!.albums[position].toString())
         }
         Log.d("Album adapter set", "Album adapter set")
-        return view1
+        return binding.root
     }
 
-    // Calling '/api/users/2'
+    /*// Calling '/api/users/2'
     private fun getPhotos() {
         val httpClient = OkHttpClient.Builder()
         val retrofit = Retrofit.Builder()
@@ -120,5 +147,5 @@ class AlbumFragment(albumId: Int) : Fragment() {
                 Log.d("Network Error", "Network Error :: " + t.localizedMessage)
             }
         })
-    }
+    }*/
 }

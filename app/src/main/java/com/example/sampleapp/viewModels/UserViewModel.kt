@@ -2,8 +2,8 @@ package com.example.sampleapp
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.example.helloworld.User
-import java.util.*
+import com.example.sampleapp.models.User
+import com.example.sampleapp.repository.UserRepository
 
 class UserViewModel : ViewModel() {
     private lateinit var userRepository : UserRepository
@@ -11,7 +11,6 @@ class UserViewModel : ViewModel() {
 
     fun init() {
         userRepository = UserRepository()
-       // userRepository.getUsersLiveData()
         getUsers()
         usersLiveData = userRepository.getUsersLiveData()
     }

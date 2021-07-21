@@ -1,7 +1,7 @@
-package com.example.sampleapp
+package com.example.sampleapp.network
 
-import com.example.helloworld.Album
-import com.example.helloworld.User
+import com.example.sampleapp.models.Album
+import com.example.sampleapp.models.User
 import retrofit2.Call
 import retrofit2.http.GET
 

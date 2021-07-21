@@ -1,4 +1,4 @@
-package com.example.helloworld
+package com.example.sampleapp.models
 
 class User(var id: Int, var name: String, var email: String, var phone: String) {
 
