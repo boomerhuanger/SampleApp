@@ -34,8 +34,7 @@ class UserFragment(private val mContext: Context) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
+        
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         userViewModel.init()
 
@@ -49,10 +48,6 @@ class UserFragment(private val mContext: Context) : Fragment() {
         Log.d("userAlbumAdapter", userAlbumAdapter.toString())
         val userInfo = binding.userList
         userInfo.adapter = userAlbumAdapter
-
-        // Inflate the layout for this fragment
-        //view1 = inflater.inflate(R.layout.user_list, container, false)
-        //getUsers()
 
         //Log.d("Users list", "The length of the list of Users is" + userViewModel!!.getUsersLiveData().)
         userInfo.onItemClickListener = OnItemClickListener { parent, view1, position, id ->
