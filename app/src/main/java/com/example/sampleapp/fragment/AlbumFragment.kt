@@ -36,6 +36,7 @@ class AlbumFragment(albumId: Int) : Fragment() {
     private val baseUrl = "https://jsonplaceholder.typicode.com/"
     private var fragment: Fragment? = null
     private val thumbnailFragment : String = "Thumbnail Fragment"
+    private var albums = mutableListOf<Album>()
 
     private lateinit var albumViewModel: AlbumViewModel
 
@@ -53,7 +54,6 @@ class AlbumFragment(albumId: Int) : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.album_list, container, false)
         albumViewModel.getAlbumsLiveData().observe(viewLifecycleOwner, Observer { data ->
-            var albums = mutableListOf<Album>()
             for (item in data) {
                 if (item.albumId == albumId) {
                     albums.add(item)
@@ -90,7 +90,7 @@ class AlbumFragment(albumId: Int) : Fragment() {
             fragment = fm!!.findFragmentByTag(thumbnailFragment);
             if (fragment == null) {
                 val ft = fm?.beginTransaction();
-                fragment = ThumbnailFragment(albumViewModel.getAlbumsLiveData().value?.get(position));
+                fragment = ThumbnailFragment(albums.get(position));
                 ft.add(R.id.container, fragment as ThumbnailFragment, thumbnailFragment);
                 ft.addToBackStack(thumbnailFragment)
                 ft.commit();
