@@ -10,21 +10,28 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.sampleapp.databinding.ThumbnailInfoBinding
 import com.example.sampleapp.databinding.UserListBinding
+import com.example.sampleapp.fragment.BaseFragment
 import com.example.sampleapp.models.Album
 import com.squareup.picasso.Picasso
 
-class ThumbnailFragment (private val album : Album?) : Fragment(){
+class ThumbnailFragment (private val album : Album) : BaseFragment(){
     private var view1: View? = null
     private lateinit var binding:ThumbnailInfoBinding;
+    private val photoTitle = 1;
+    private val albumTitle = 2;
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun getLayoutId(): Int {
+        return R.layout.thumbnail_info
+    }
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.thumbnail_info, container, false)
-        Picasso.get().load(album?.url).into(binding.thumbnail)
-        binding.text = album?.title
-        binding.albumID = "Album ID: " + album?.albumId
-        binding.photoID = "Photo ID: " + album?.id
-        return binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding = baseBinding as ThumbnailInfoBinding
+
+        Picasso.get().load(album.url).into(binding.thumbnail)
+        binding.text = album.title
+        binding.albumID = getTitle(albumTitle, album.albumId)
+        binding.photoID = getTitle(photoTitle, album.id)
     }
 }

@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.R
 import com.example.sampleapp.databinding.AlbumListBinding
+import com.example.sampleapp.databinding.UserInfoBinding
 import com.example.sampleapp.databinding.UserListBinding
 import com.example.sampleapp.models.User
 
@@ -16,7 +18,7 @@ class UserAdapter(private val mContext: Context?, var mResource: Int, users: Lis
     mContext!!, mResource, users!!) {
     //getting the view and attach it to the ListView
     private var holder : UserViewHolder? = null;
-    private lateinit var binding: UserListBinding;
+    private lateinit var binding: UserInfoBinding;
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var convertView = convertView
         val name = getItem(position)!!.name
@@ -26,17 +28,21 @@ class UserAdapter(private val mContext: Context?, var mResource: Int, users: Lis
         Integer.toString(id)
 
         val inflater = LayoutInflater.from(mContext)
+        binding = DataBindingUtil.inflate(inflater, R.layout.user_info,parent,false)
 
-        if (convertView == null) {
-            convertView = inflater.inflate(mResource, parent, false)
+        /*if (convertView == null) {
+            //convertView = inflater.inflate(mResource, parent, false)
             holder = UserViewHolder(convertView)
             convertView.tag = holder
         } else {
             holder = convertView.tag as UserViewHolder
-        }
+        }*/
 
-        val tvName = holder!!.name
-        val tvId = holder!!.id
+        binding.nameInfo = "Name: $name";
+        binding.emailInfo = "Email: $email"
+        binding.idInfo = "ID: $id"
+        binding.phoneInfo = "Phone: $phone"
+        /*val tvId = holder!!.id
         val tvEmail = holder!!.email
         val tvPhone = holder!!.phone
         val idToSet = "ID: $id"
@@ -46,9 +52,9 @@ class UserAdapter(private val mContext: Context?, var mResource: Int, users: Lis
         val emailToSet = "Email: $email"
         tvEmail.text = emailToSet
         val phoneToSet = "Phone: $phone"
-        tvPhone.text = phoneToSet
+        tvPhone.text = phoneToSet*/
 
-        return convertView!!
+        return binding.root
     }
 }
 

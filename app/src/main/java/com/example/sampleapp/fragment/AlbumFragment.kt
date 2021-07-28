@@ -1,5 +1,6 @@
 package com.example.helloworld
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,19 +25,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.sql.DriverManager
 import java.util.*
 import androidx.lifecycle.Observer
+import com.example.sampleapp.fragment.BaseFragment
 
 /**
  * A simple [Fragment] subclass.
  * Use the [AlbumFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AlbumFragment(albumId: Int) : Fragment() {
+class AlbumFragment(albumId: Int) : BaseFragment() {
     private var albumId : Int = albumId
     private var view1: View? = null
     private val baseUrl = "https://jsonplaceholder.typicode.com/"
     private var fragment: Fragment? = null
     private val thumbnailFragment : String = "Thumbnail Fragment"
     private var albums = mutableListOf<Album>()
+    private val albumTitle = 2;
 
     private lateinit var albumViewModel: AlbumViewModel
 
@@ -44,14 +47,20 @@ class AlbumFragment(albumId: Int) : Fragment() {
     private var albumAdapter: AlbumAdapter? = null;
     private lateinit var binding: AlbumListBinding;
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-    savedInstanceState: Bundle?): View? {
+    @SuppressLint("ResourceType")
+    override fun getLayoutId(): Int {
+        return R.layout.album_list
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         // Inflate the layout for this fragment
 
         albumViewModel = ViewModelProvider(this).get(AlbumViewModel::class.java)
         albumViewModel.init()
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.album_list, container, false)
+        binding = baseBinding as AlbumListBinding
         albumViewModel.getAlbumsLiveData().observe(viewLifecycleOwner, Observer { data ->
             for (item in data) {
                 if (item.albumId == albumId) {
@@ -71,7 +80,7 @@ class AlbumFragment(albumId: Int) : Fragment() {
         //big system calls to a database etc. shoould be implemented with a viewModel
         //viewModel is like hiding the business logic
 
-        binding.title = "Album ID: $albumId"
+        binding.title = getTitle(albumTitle, albumId)
         albumInfo.onItemClickListener = OnItemClickListener { parent, view1, position, id ->
             Log.d("Album fragment", "In album fragment")
             Log.i("Touch", "Touched the screen");
@@ -91,6 +100,5 @@ class AlbumFragment(albumId: Int) : Fragment() {
             //Log.i("Album info", albumViewModel!!.albums[position].toString())
         }
         Log.d("Album adapter set", "Album adapter set")
-        return binding.root
     }
 }

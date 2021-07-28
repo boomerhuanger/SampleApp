@@ -28,26 +28,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="30sp"
-                android:text="@{albumID}"
-                ></TextView>
+                android:textSize="@dimen/text_size"
+                android:text="@{albumID}" />
 
             <TextView
                 android:id="@+id/thumbnail_photo_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="30sp"
-                android:text="@{photoID}"
-                ></TextView>
+                android:textSize="@dimen/text_size"
+                android:text="@{photoID}" />
 
             <ImageView
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 android:id="@+id/thumbnail"
-                android:layout_gravity="center_horizontal"
-
-                ></ImageView>
+                android:layout_gravity="center_horizontal" />
 
             <TextView
                 android:id="@+id/thumbnailText"
@@ -55,10 +51,9 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:textSize="30sp"
+                android:textSize="@dimen/text_size"
                 android:layout_marginTop="30dp"
-                android:theme="@style/BlueTileWhiteText"
-                ></TextView>
+                android:theme="@style/BlueTileWhiteText" />
 
         </LinearLayout>
     </ScrollView>

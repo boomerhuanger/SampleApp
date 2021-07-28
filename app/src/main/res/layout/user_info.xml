@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="name_info"
+            type="String" />
+        <variable
+            name="id_info"
+            type="String" />
+        <variable
+            name="phone_info"
+            type="String" />
+        <variable
+            name="email_info"
+            type="String" />
+    </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="ID"
+            android:text="@{id_info}"
             ></TextView>
 
         <TextView
@@ -22,7 +36,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/name"
             android:gravity="left"
-            android:text="Name:"
+            android:text="@{name_info}"
             ></TextView>
 
         <TextView
@@ -30,7 +44,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/email"
             android:gravity="left"
-            android:text="Email:"
+            android:text="@{email_info}"
             ></TextView>
 
         <TextView
@@ -38,7 +52,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/phone"
             android:gravity="left"
-            android:text="Phone:"
+            android:text="@{phone_info}"
             ></TextView>
 
     </LinearLayout>

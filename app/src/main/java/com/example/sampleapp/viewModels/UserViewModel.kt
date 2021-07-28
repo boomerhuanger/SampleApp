@@ -11,11 +11,11 @@ class UserViewModel : ViewModel() {
 
     fun init() {
         userRepository = UserRepository()
-        getUsers()
+        getData()
         usersLiveData = userRepository.getUsersLiveData()
     }
 
-    fun getUsers() {
+    fun getData() {
         userRepository.getUsers()
     }
 

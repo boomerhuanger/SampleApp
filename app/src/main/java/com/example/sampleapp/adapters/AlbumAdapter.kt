@@ -8,18 +8,21 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.R
+import com.example.sampleapp.databinding.AlbumInfoBinding
 import com.example.sampleapp.models.Album
 import com.squareup.picasso.Picasso
 
 class AlbumAdapter(private val mContext: Context?, private val resource: Int, albums: List<Album>?) :
     ArrayAdapter<Album?>(mContext!!, resource, albums!!) {
     private var holder: AlbumViewHolder? = null
+    private lateinit var binding : AlbumInfoBinding;
 
     //getting the view and attach it to the ListView
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var convertView = convertView
+        //var convertView = convertView
         val id = getItem(position)!!.id
         val albumId = getItem(position)!!.albumId
         val title = getItem(position)!!.title
@@ -30,7 +33,11 @@ class AlbumAdapter(private val mContext: Context?, private val resource: Int, al
         Log.d("Image url", url)
         val inflater = LayoutInflater.from(mContext)
 
-        if (convertView == null) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.album_info, parent, false)
+
+
+
+        /*if (convertView == null) {
             convertView = inflater.inflate(resource, parent, false)
             holder = AlbumViewHolder(convertView)
             if (convertView != null) {
@@ -38,14 +45,13 @@ class AlbumAdapter(private val mContext: Context?, private val resource: Int, al
             }
         } else {
             holder = convertView.tag as AlbumViewHolder
-        }
+        }*/
 
-        Picasso.get().load(thumbnailUrl).into(holder!!.image)
-        holder!!.text.setText(title);
+        Picasso.get().load(thumbnailUrl).into(binding.albumImage)
+        binding.text = title
 
-        return convertView!!
+        return binding.root
     }
-
 }
 
 internal class AlbumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
