@@ -1,17 +1,10 @@
 package com.example.helloworld
 
-import android.content.Context
 import android.os.Bundle
-import android.os.Debug
 import android.util.Log
-import android.util.Log.i
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.sampleapp.R
@@ -19,11 +12,12 @@ import com.example.sampleapp.UserViewModel
 import com.example.sampleapp.databinding.UserListBinding
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.example.sampleapp.fragment.BaseFragment
 import java.sql.DriverManager.println
 import java.util.*
 
-class UserFragment(private val mContext: Context) : BaseFragment() {
+class UserFragment() : BaseFragment() {
     private var view1: View? = null
     private val baseUrl = "https://jsonplaceholder.typicode.com/"
     private val albumFragment: String = "Album Fragment"
@@ -60,12 +54,17 @@ class UserFragment(private val mContext: Context) : BaseFragment() {
         userInfo.adapter = userAlbumAdapter
 
         //Log.d("Users list", "The length of the list of Users is" + userViewModel!!.getUsersLiveData().)
-        userInfo.onItemClickListener =
-            /*OnItemClickListener{ adapterView: AdapterView<*>, view1: View, i: Int, l: Long ->
-            Navigation.findNavController(binding.root).navigate(R.id.action_userFragment_to_albumFragment)
-        }*/
+        userInfo.setOnItemClickListener { adapterView: AdapterView<*>, view: View, i: Int, l: Long ->
+            Log.e("position id", i.toString())
+            val action = UserFragmentDirections.actionUserFragmentToAlbumFragment()
+            //Navigation.findNavController(binding.root).navigate(action)
+            view.findNavController().navigate(action)
 
-            OnItemClickListener { parent, view1, position, id ->
+        }
+
+
+
+            /*OnItemClickListener { parent, view1, position, id ->
             Log.i("Touch", "Touched the screen")
             Log.i("Position in list", position.toString())
             val fm = activity?.supportFragmentManager
@@ -78,7 +77,7 @@ class UserFragment(private val mContext: Context) : BaseFragment() {
                 ft.commit()
                 Log.i("Position is ", position.toString())
             }
-        }
+        }*/
         Log.d("User adapter set", "User adapter set")
         //return binding.root;
         //return super.onCreateView(inflater, container, savedInstanceState)

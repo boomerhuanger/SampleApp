@@ -18,7 +18,7 @@
             android:gravity="center"
             android:textSize="@dimen/text_size"
             android:text="@{titleName}"
-            ></TextView>
+            />
 
         <ListView
             android:id="@+id/userList"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:divider="@android:color/white"
             android:dividerHeight="15.0sp"
-            ></ListView>
+            />
 
     </LinearLayout>
 </layout>

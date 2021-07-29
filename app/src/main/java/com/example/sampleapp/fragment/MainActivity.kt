@@ -24,6 +24,10 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_fragment) as NavHostFragment
         navController  = navHostFragment.findNavController()
 
+        val inflater = navController.navInflater
+        val graph = inflater.inflate(R.navigation.my_nav)
+        navHostFragment.findNavController().graph = graph
+
         /*val fm = supportFragmentManager
         fragment = fm.findFragmentByTag(userFragment)
         if (fragment == null) {
